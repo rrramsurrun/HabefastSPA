@@ -6,6 +6,7 @@ import HistoryView from './pages/HistoryView';
 import PageNotFound from './pages/PageNotFound';
 import ExerciseTemplateView from './pages/ExerciseTemplateView';
 import MasterContextProvider from './store/MasterContext';
+import ExerciseTemplateEditView from './pages/ExerciseTemplateEditView';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="tracking" element={<TrackingView />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="exercise/:id" element={<ExerciseTemplateView />} />
+          <Route path="exercise" element={<ExerciseTemplateEditView />} />
         </Routes>
       </BrowserRouter>
     </MasterContextProvider>

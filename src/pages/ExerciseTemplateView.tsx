@@ -5,7 +5,15 @@ import { useMasterContext } from '../store/MasterContext';
 
 export default function ExerciseTemplateView() {
   const params = useParams();
+  //Convert to number
   const exerciseId = Number(params.id);
+  if (isNaN(exerciseId)) {
+    return (
+      <main>
+        <div>Invalid URL</div>
+      </main>
+    );
+  }
   const { exercises } = useMasterContext();
 
   const exercise = exercises.find((e) => e.id === exerciseId);

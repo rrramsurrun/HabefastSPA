@@ -18,6 +18,7 @@ const initialState: masterData = {
 
 type masterDataContext = masterData & {
   loadExercises: (exercises: ExerciseTemplate[]) => void;
+  addExercise: (exercise: ExerciseTemplate) => void;
 };
 
 const MasterContext = createContext<masterDataContext | null>(null);
@@ -32,6 +33,9 @@ function MasterContextProvider({ children }: MasterContextProviderProps) {
     exercises: masterDataState.exercises,
     loadExercises(exercises) {
       dispatch({ type: 'LOAD_EXERCISES', payload: exercises });
+    },
+    addExercise(exercise) {
+      dispatch({ type: 'ADD_EXERCISE', payload: exercise });
     },
   };
 
