@@ -4,10 +4,12 @@ import TrackingView from './pages/TrackingView';
 import ExercisesView from './pages/ExercisesView';
 import HistoryView from './pages/HistoryView';
 import PageNotFound from './pages/PageNotFound';
+import ExerciseTemplateView from './pages/ExerciseTemplateView';
+import MasterContextProvider from './store/MasterContext';
 
 function App() {
   return (
-    <body>
+    <MasterContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HistoryView />} />
@@ -15,9 +17,10 @@ function App() {
           <Route path="exercises" element={<ExercisesView />} />
           <Route path="tracking" element={<TrackingView />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="exercise/:id" element={<ExerciseTemplateView />} />
         </Routes>
       </BrowserRouter>
-    </body>
+    </MasterContextProvider>
   );
 }
 
