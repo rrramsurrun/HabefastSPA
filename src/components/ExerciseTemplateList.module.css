@@ -4,10 +4,20 @@
   padding: 0;
 }
 .li {
-  font-size: 1.5em;
   box-sizing: border-box;
   padding: 0.2em;
+  margin-left: 0.5em;
+  display: flex;
+  flex-direction: column;
+}
+.li .name {
+  font-size: 1.5em;
+}
+.li .bodyPart {
+  font-size: 1em;
+  color: grey;
 }
 .li:hover {
   background-color: lightgrey;
+  cursor: pointer;
 }

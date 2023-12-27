@@ -12,7 +12,8 @@ export default function ExerciseTemplateList({
     <ul className={styles.ul}>
       {exercises.map((e) => (
         <li className={styles.li} key={e.id}>
-          {e.name}
+          <span className={styles.name}>{e.name}</span>
+          <span className={styles.bodyPart}>{e.bodyPart}</span>
         </li>
       ))}
     </ul>

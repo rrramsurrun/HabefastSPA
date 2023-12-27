@@ -1,6 +1,16 @@
 .nav {
-  width: 100%;
+  position: fixed;
+  width: 80%;
+  bottom: 0;
+  margin: 0;
 }
+
+@media only screen and (min-width: 700px) {
+  .nav {
+    width: 70%;
+  }
+}
+
 .nav ul {
   width: 100%;
   display: flex;
