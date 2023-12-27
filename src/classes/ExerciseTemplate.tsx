@@ -1,11 +1,11 @@
-class ExerciseTemplate {
-  id: string;
+export default class ExerciseTemplate {
+  id: number;
   name: string;
   exerciseType: string;
   bodyPart: string;
 
   public constructor(
-    id: string,
+    id: number,
     name: string,
     exerciseType: string,
     bodyPart: string

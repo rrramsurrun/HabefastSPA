@@ -1,12 +1,12 @@
-import React from "react";
-import NavBar from "../components/NavBar";
+import React from 'react';
+import NavBar from '../components/NavBar';
 
 function WorkoutView() {
   return (
-    <div>
+    <main>
       <h1>WorkoutView</h1>
       <NavBar />
-    </div>
+    </main>
   );
 }
 
