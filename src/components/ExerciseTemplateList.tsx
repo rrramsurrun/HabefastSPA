@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import ExerciseTemplate from '../classes/ExerciseTemplate';
-import ExerciseTemplateView from '../pages/ExerciseTemplateView';
 import { useMasterContext } from '../store/MasterContext';
 import styles from './ExerciseTemplateList.module.css';
 import { NavLink } from 'react-router-dom';

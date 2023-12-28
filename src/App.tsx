@@ -19,7 +19,14 @@ function App() {
           <Route path="tracking" element={<TrackingView />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="exercise/:id" element={<ExerciseTemplateView />} />
-          <Route path="exercise" element={<ExerciseTemplateEditView />} />
+          <Route
+            path="exerciseedit"
+            element={<ExerciseTemplateEditView action="ADD" />}
+          />
+          <Route
+            path="exerciseedit/:id"
+            element={<ExerciseTemplateEditView action="EDIT" />}
+          />
         </Routes>
       </BrowserRouter>
     </MasterContextProvider>

@@ -7,7 +7,7 @@ function ExercisesView() {
   return (
     <main>
       <div className="flexRow">
-        <h1>Exercises</h1> <NavLink to="/exercise">Add New</NavLink>
+        <h1>Exercises</h1> <NavLink to="/exerciseedit">Add New</NavLink>
       </div>
 
       <ExerciseTemplateList />

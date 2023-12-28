@@ -11,7 +11,12 @@ type AddExerciseAction = {
   payload: ExerciseTemplate;
 };
 
-type Action = LoadExercisesAction | AddExerciseAction;
+type EditExerciseAction = {
+  type: 'EDIT_EXERCISE';
+  payload: ExerciseTemplate;
+};
+
+type Action = LoadExercisesAction | AddExerciseAction | EditExerciseAction;
 
 export default function masterReducer(state: masterDataType, action: Action) {
   if (action.type === 'LOAD_EXERCISES') {
@@ -24,6 +29,13 @@ export default function masterReducer(state: masterDataType, action: Action) {
   if (action.type === 'ADD_EXERCISE') {
     state.exercises.push(action.payload);
     return { ...state };
+  }
+  if (action.type === 'EDIT_EXERCISE') {
+    const newExercises = state.exercises.filter(
+      (e) => e.id !== action.payload.id
+    );
+    newExercises.push(action.payload);
+    return { ...state, exercises: newExercises };
   }
 
   return state;
