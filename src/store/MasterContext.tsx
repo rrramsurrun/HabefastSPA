@@ -53,6 +53,7 @@ export function useMasterContext() {
   if (masterCtx === null) {
     throw new Error('MasterContext is null!!!!!');
   }
+  //Load exercises into context provider on program start
   useEffect(() => {
     setTimeout(() => {
       masterCtx.loadExercises([

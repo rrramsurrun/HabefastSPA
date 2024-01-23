@@ -4,9 +4,9 @@ import TrackingView from './pages/TrackingView';
 import ExercisesView from './pages/ExercisesView';
 import HistoryView from './pages/HistoryView';
 import PageNotFound from './pages/PageNotFound';
-import ExerciseTemplateView from './pages/ExerciseTemplateView';
+import ExerciseTemplateView from './overlays/ExerciseTemplateView';
 import MasterContextProvider from './store/MasterContext';
-import ExerciseTemplateEditView from './pages/ExerciseTemplateEditView';
+import ExerciseTemplateEditView from './overlays/ExerciseTemplateEditView';
 
 function App() {
   return (
