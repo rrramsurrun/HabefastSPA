@@ -7,19 +7,23 @@ import {
 } from 'react';
 import ExerciseTemplate from '../classes/ExerciseTemplate';
 import masterReducer from './masterContextReducer';
+import Workout from '../classes/Workout';
 
 export type masterData = {
   exercises: ExerciseTemplate[];
+  activeWorkout: Workout | null;
 };
 
 const initialState: masterData = {
   exercises: [],
+  activeWorkout: null,
 };
 
 type masterDataContext = masterData & {
   loadExercises: (exercises: ExerciseTemplate[]) => void;
   addExercise: (exercise: ExerciseTemplate) => void;
   editExercise: (exercise: ExerciseTemplate) => void;
+  startWorkout: () => void;
 };
 
 const MasterContext = createContext<masterDataContext | null>(null);
@@ -32,6 +36,7 @@ function MasterContextProvider({ children }: MasterContextProviderProps) {
   const [masterDataState, dispatch] = useReducer(masterReducer, initialState);
   const ctx: masterDataContext = {
     exercises: masterDataState.exercises,
+    activeWorkout: masterDataState.activeWorkout,
     loadExercises(exercises) {
       dispatch({ type: 'LOAD_EXERCISES', payload: exercises });
     },
@@ -40,6 +45,9 @@ function MasterContextProvider({ children }: MasterContextProviderProps) {
     },
     editExercise(exercise) {
       dispatch({ type: 'EDIT_EXERCISE', payload: exercise });
+    },
+    startWorkout() {
+      dispatch({ type: 'START_WORKOUT' });
     },
   };
 

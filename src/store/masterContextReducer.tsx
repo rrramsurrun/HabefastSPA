@@ -1,4 +1,5 @@
 import ExerciseTemplate from '../classes/ExerciseTemplate';
+import Workout from '../classes/Workout';
 import { masterData as masterDataType } from './MasterContext';
 
 type LoadExercisesAction = {
@@ -16,7 +17,15 @@ type EditExerciseAction = {
   payload: ExerciseTemplate;
 };
 
-type Action = LoadExercisesAction | AddExerciseAction | EditExerciseAction;
+type StartWorkoutAction = {
+  type: 'START_WORKOUT';
+};
+
+type Action =
+  | LoadExercisesAction
+  | AddExerciseAction
+  | EditExerciseAction
+  | StartWorkoutAction;
 
 export default function masterReducer(state: masterDataType, action: Action) {
   if (action.type === 'LOAD_EXERCISES') {
@@ -36,6 +45,10 @@ export default function masterReducer(state: masterDataType, action: Action) {
     );
     newExercises.push(action.payload);
     return { ...state, exercises: newExercises };
+  }
+  if (action.type === 'START_WORKOUT') {
+    const activeWorkout = new Workout('Workout');
+    return { ...state, activeWorkout };
   }
 
   return state;
