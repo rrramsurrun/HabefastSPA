@@ -21,11 +21,17 @@ type StartWorkoutAction = {
   type: 'START_WORKOUT';
 };
 
+type SaveWorkoutAction = {
+  type: 'SAVE_WORKOUT';
+  payload: Workout;
+};
+
 type Action =
   | LoadExercisesAction
   | AddExerciseAction
   | EditExerciseAction
-  | StartWorkoutAction;
+  | StartWorkoutAction
+  | SaveWorkoutAction;
 
 export default function masterReducer(state: masterDataType, action: Action) {
   if (action.type === 'LOAD_EXERCISES') {
@@ -49,6 +55,11 @@ export default function masterReducer(state: masterDataType, action: Action) {
   if (action.type === 'START_WORKOUT') {
     const activeWorkout = new Workout('Workout');
     return { ...state, activeWorkout };
+  }
+  if (action.type === 'SAVE_WORKOUT') {
+    state.workouts.push(action.payload);
+    state.activeWorkout = null;
+    return { ...state };
   }
 
   return state;

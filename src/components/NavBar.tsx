@@ -8,9 +8,11 @@ export default function NavBar() {
   if (activeWorkout) {
     return (
       <div className={styles.nav}>
-        <button className="mainpage__widebutton mainpage__widebutton--plain">
-          Return to Active Workout
-        </button>
+        <div className="mainpage__widebutton mainpage__widebutton--plain">
+          <NavLink to="/activeworkout" state={{ lastPage: location.pathname }}>
+            Return to Active Workout
+          </NavLink>
+        </div>
         {PageNav('')}
       </div>
     );

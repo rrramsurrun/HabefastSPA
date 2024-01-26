@@ -9,4 +9,9 @@ export default class Workout {
     this.name = name;
     this.start = new Date();
   }
+
+  endWorkout = () => {
+    this.end = new Date();
+    return true;
+  };
 }

@@ -12,11 +12,13 @@ import Workout from '../classes/Workout';
 export type masterData = {
   exercises: ExerciseTemplate[];
   activeWorkout: Workout | null;
+  workouts: Workout[];
 };
 
 const initialState: masterData = {
   exercises: [],
   activeWorkout: null,
+  workouts: [],
 };
 
 type masterDataContext = masterData & {
@@ -24,6 +26,7 @@ type masterDataContext = masterData & {
   addExercise: (exercise: ExerciseTemplate) => void;
   editExercise: (exercise: ExerciseTemplate) => void;
   startWorkout: () => void;
+  saveWorkout: (workout: Workout) => void;
 };
 
 const MasterContext = createContext<masterDataContext | null>(null);
@@ -37,6 +40,7 @@ function MasterContextProvider({ children }: MasterContextProviderProps) {
   const ctx: masterDataContext = {
     exercises: masterDataState.exercises,
     activeWorkout: masterDataState.activeWorkout,
+    workouts: masterDataState.workouts,
     loadExercises(exercises) {
       dispatch({ type: 'LOAD_EXERCISES', payload: exercises });
     },
@@ -48,6 +52,9 @@ function MasterContextProvider({ children }: MasterContextProviderProps) {
     },
     startWorkout() {
       dispatch({ type: 'START_WORKOUT' });
+    },
+    saveWorkout(workout) {
+      dispatch({ type: 'SAVE_WORKOUT', payload: workout });
     },
   };
 
