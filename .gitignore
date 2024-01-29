@@ -25,3 +25,4 @@ dist-ssr
 
 #Reminders for my brain
 devnotes.txt
+.env

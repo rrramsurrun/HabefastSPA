@@ -4,10 +4,12 @@ import {
   useContext,
   useReducer,
   useEffect,
+  useState,
 } from 'react';
 import ExerciseTemplate from '../classes/ExerciseTemplate';
 import masterReducer from './masterContextReducer';
 import Workout from '../classes/Workout';
+import { getExercises, getWorkouts } from './masterFetcher';
 
 export type masterData = {
   exercises: ExerciseTemplate[];
@@ -25,6 +27,7 @@ type masterDataContext = masterData & {
   loadExercises: (exercises: ExerciseTemplate[]) => void;
   addExercise: (exercise: ExerciseTemplate) => void;
   editExercise: (exercise: ExerciseTemplate) => void;
+  loadWorkouts: (workouts: Workout[]) => void;
   startWorkout: () => void;
   saveWorkout: (workout: Workout) => void;
 };
@@ -50,6 +53,9 @@ function MasterContextProvider({ children }: MasterContextProviderProps) {
     editExercise(exercise) {
       dispatch({ type: 'EDIT_EXERCISE', payload: exercise });
     },
+    loadWorkouts(workouts) {
+      dispatch({ type: 'LOAD_WORKOUTS', payload: workouts });
+    },
     startWorkout() {
       dispatch({ type: 'START_WORKOUT' });
     },
@@ -68,21 +74,40 @@ export function useMasterContext() {
   if (masterCtx === null) {
     throw new Error('MasterContext is null!!!!!');
   }
+
   //Load exercises into context provider on program start
+  const [exerciseTemplates, setExerciseTemplates] =
+    useState<ExerciseTemplate[]>();
+
   useEffect(() => {
-    setTimeout(() => {
-      masterCtx.loadExercises([
-        { id: 0, name: 'Bench Press', exerciseType: 'Reps', bodyPart: 'Chest' },
-        {
-          id: 1,
-          name: 'Seated Cable Row',
-          exerciseType: 'Reps',
-          bodyPart: 'Back',
-        },
-        { id: 2, name: 'Back Squat', exerciseType: 'Reps', bodyPart: 'Legs' },
-        { id: 3, name: 'Deadlift', exerciseType: 'Reps', bodyPart: 'Legs' },
-      ]);
-    }, 1000);
+    if (exerciseTemplates) {
+      masterCtx.loadExercises(exerciseTemplates);
+    }
+  }, [exerciseTemplates]);
+
+  useEffect(() => {
+    async function fetchExercises() {
+      const data = (await getExercises()) as ExerciseTemplate[];
+      setExerciseTemplates(data);
+    }
+    fetchExercises();
+  }, []);
+
+  //Load workouts into context provider on program start
+  const [workouts, setWorkouts] = useState<Workout[]>();
+
+  useEffect(() => {
+    if (workouts) {
+      masterCtx.loadWorkouts(workouts);
+    }
+  }, [workouts]);
+
+  useEffect(() => {
+    async function fetchWorkouts() {
+      const data = (await getWorkouts()) as Workout[];
+      setWorkouts(data);
+    }
+    fetchWorkouts();
   }, []);
 
   return masterCtx;

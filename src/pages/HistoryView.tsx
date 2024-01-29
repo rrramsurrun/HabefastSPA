@@ -9,7 +9,7 @@ function HistoryView() {
       {workouts.map((workout) => (
         <div>
           <div>{workout.name}</div>
-          <div>{workout.start.toDateString()}</div>
+          <div>{workout.start.toString()}</div>
         </div>
       ))}
       <NavBar />

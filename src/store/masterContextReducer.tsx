@@ -17,6 +17,11 @@ type EditExerciseAction = {
   payload: ExerciseTemplate;
 };
 
+type LoadWorkoutAction = {
+  type: 'LOAD_WORKOUTS';
+  payload: Workout[];
+};
+
 type StartWorkoutAction = {
   type: 'START_WORKOUT';
 };
@@ -30,6 +35,7 @@ type Action =
   | LoadExercisesAction
   | AddExerciseAction
   | EditExerciseAction
+  | LoadWorkoutAction
   | StartWorkoutAction
   | SaveWorkoutAction;
 
@@ -51,6 +57,9 @@ export default function masterReducer(state: masterDataType, action: Action) {
     );
     newExercises.push(action.payload);
     return { ...state, exercises: newExercises };
+  }
+  if (action.type === 'LOAD_WORKOUTS') {
+    return { ...state, workouts: action.payload };
   }
   if (action.type === 'START_WORKOUT') {
     const activeWorkout = new Workout('Workout');
