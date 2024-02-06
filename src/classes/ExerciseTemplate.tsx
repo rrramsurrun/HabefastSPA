@@ -1,14 +1,14 @@
 export default class ExerciseTemplate {
-  id: number;
+  id?: number;
   name: string;
   exerciseType: string;
   bodyPart: string;
 
   public constructor(
-    id: number,
     name: string,
     exerciseType: string,
-    bodyPart: string
+    bodyPart: string,
+    id?: number
   ) {
     this.id = id;
     this.name = name;

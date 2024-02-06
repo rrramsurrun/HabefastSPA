@@ -4,35 +4,41 @@
   bottom: 0;
   margin: 0;
 }
-
-@media only screen and (min-width: 700px) {
-  .nav {
-    width: 70%;
-  }
-}
-
 .nav ul {
   width: 100%;
   display: flex;
-  justify-content: space-between;
   /* background-color: pink; */
 }
 
 .nav ul li {
   display: flex;
   flex: 1;
-}
-
-.nav a:link,
-.nav a:visited {
-  text-decoration: none;
-  color: inherit;
-  width: 100%;
   border-style: solid;
   border-radius: 2px;
   border-color: black;
-  padding: 0.2em 0.5em;
+}
+
+.nav a {
+  text-decoration: none;
+  color: black;
+  width: 100%;
   text-align: center;
+  font-weight: 600;
+
+  height: 2em;
+  padding: 0.5em 0.5em;
+  font-size: 1em;
+}
+
+@media only screen and (min-width: 700px) {
+  .nav {
+    width: 70%;
+  }
+  .nav a {
+    height: 2em;
+    padding: 0.5em 0.5em;
+    font-size: 1.5em;
+  }
 }
 
 .nav a:global(.active) {

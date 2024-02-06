@@ -1,0 +1,8 @@
+.workout * {
+  font-size: 1.5em;
+}
+.workout {
+  border: 0.1em;
+  border-style: solid;
+  margin: 0.5em 0;
+}

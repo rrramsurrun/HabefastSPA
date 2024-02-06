@@ -1,9 +1,10 @@
 // import React from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMasterContext } from '../store/MasterContext';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './ExerciseTemplateEditView.module.css';
 import ExerciseTemplate from '../classes/ExerciseTemplate';
+import { useUpdateEntity } from '../store/hooks/useUpdateEntity';
 
 export default function ExerciseTemplateEditView({
   action,
@@ -13,6 +14,9 @@ export default function ExerciseTemplateEditView({
   const params = useParams();
   const navigate = useNavigate();
   const { exercises, addExercise, editExercise } = useMasterContext();
+  const [newExercise, setnewExercise] = useState<ExerciseTemplate | null>(null);
+
+  useUpdateEntity(newExercise);
 
   //Handle exercise load
   const id = Number(params.id);
@@ -28,8 +32,6 @@ export default function ExerciseTemplateEditView({
     }
   }
   const changeExercise = action === 'ADD' ? addExercise : editExercise;
-
-  const exerciseId = useRef<HTMLInputElement>(null);
   const exerciseName = useRef<HTMLInputElement>(null);
   const exercisePart = useRef<HTMLInputElement>(null);
   const exerciseType = useRef<HTMLInputElement>(null);
@@ -37,20 +39,16 @@ export default function ExerciseTemplateEditView({
   function handleSubmit() {
     //Add exercise to exercises using master context
     if (
-      exerciseId.current !== null &&
       exerciseName.current !== null &&
       exercisePart.current !== null &&
       exerciseType.current !== null
     ) {
       const newExercise: ExerciseTemplate = {
-        id: Number(exerciseId.current.value),
         name: exerciseName.current.value,
         bodyPart: exercisePart.current.value,
         exerciseType: exerciseType.current.value,
       };
-      changeExercise(newExercise);
-
-      // const navigate = useNavigate();
+      setnewExercise(newExercise);
       navigate('/exercises');
     }
   }
@@ -58,13 +56,6 @@ export default function ExerciseTemplateEditView({
   return (
     <main>
       <div className={styles.flexCol}>
-        <label htmlFor="id">Exercise ID</label>
-        <input
-          id="id"
-          ref={exerciseId}
-          disabled={exercise !== undefined}
-          defaultValue={exercise === undefined ? '' : exercise.id}
-        />
         <label htmlFor="name">Exercise Name</label>
         <input
           id="name"

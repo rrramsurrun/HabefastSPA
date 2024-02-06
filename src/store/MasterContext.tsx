@@ -1,15 +1,7 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useReducer,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactNode, createContext, useContext, useReducer } from 'react';
 import ExerciseTemplate from '../classes/ExerciseTemplate';
 import masterReducer from './masterContextReducer';
 import Workout from '../classes/Workout';
-import { getExercises, getWorkouts } from './masterFetcher';
 
 export type masterData = {
   exercises: ExerciseTemplate[];
@@ -34,11 +26,7 @@ type masterDataContext = masterData & {
 
 const MasterContext = createContext<masterDataContext | null>(null);
 
-type MasterContextProviderProps = {
-  children: ReactNode;
-};
-
-function MasterContextProvider({ children }: MasterContextProviderProps) {
+function MasterContextProvider({ children }: { children: ReactNode }) {
   const [masterDataState, dispatch] = useReducer(masterReducer, initialState);
   const ctx: masterDataContext = {
     exercises: masterDataState.exercises,
@@ -71,45 +59,10 @@ function MasterContextProvider({ children }: MasterContextProviderProps) {
 
 export function useMasterContext() {
   const masterCtx = useContext(MasterContext);
+  //Will never be null, required by Typescript
   if (masterCtx === null) {
     throw new Error('MasterContext is null!!!!!');
   }
-
-  //Load exercises into context provider on program start
-  const [exerciseTemplates, setExerciseTemplates] =
-    useState<ExerciseTemplate[]>();
-
-  useEffect(() => {
-    if (exerciseTemplates) {
-      masterCtx.loadExercises(exerciseTemplates);
-    }
-  }, [exerciseTemplates]);
-
-  useEffect(() => {
-    async function fetchExercises() {
-      const data = (await getExercises()) as ExerciseTemplate[];
-      setExerciseTemplates(data);
-    }
-    fetchExercises();
-  }, []);
-
-  //Load workouts into context provider on program start
-  const [workouts, setWorkouts] = useState<Workout[]>();
-
-  useEffect(() => {
-    if (workouts) {
-      masterCtx.loadWorkouts(workouts);
-    }
-  }, [workouts]);
-
-  useEffect(() => {
-    async function fetchWorkouts() {
-      const data = (await getWorkouts()) as Workout[];
-      setWorkouts(data);
-    }
-    fetchWorkouts();
-  }, []);
-
   return masterCtx;
 }
 
