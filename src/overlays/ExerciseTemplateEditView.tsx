@@ -1,7 +1,7 @@
 // import React from "react";
 import { useParams } from 'react-router-dom';
 import { useMasterContext } from '../store/MasterContext';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styles from './ExerciseTemplateEditView.module.css';
 import ExerciseTemplate from '../classes/ExerciseTemplate';
 import { useUpdateEntity } from '../store/hooks/useUpdateEntity';
@@ -12,14 +12,14 @@ export default function ExerciseTemplateEditView({
   action: 'ADD' | 'EDIT';
 }) {
   const params = useParams();
-  const { exercises } = useMasterContext();
+  const { exercises, errormsg } = useMasterContext();
   const [newExercise, setnewExercise] = useState<ExerciseTemplate | null>(null);
 
   //If newExercise is null, this has no effect
   useUpdateEntity(newExercise, action);
 
   //Handle exercise load
-  const id = Number(params.id);
+  const id = params.id;
   let exercise: ExerciseTemplate | undefined;
   if (action === 'EDIT') {
     exercise = exercises.find((e) => e.id === id);
@@ -74,6 +74,9 @@ export default function ExerciseTemplateEditView({
           ref={exerciseType}
           defaultValue={exercise === undefined ? '' : exercise.exerciseType}
         />
+        {errormsg ? (
+          <div className="error_message">{errormsg.message}</div>
+        ) : null}
         <button onClick={handleSubmit}>Submit</button>
       </div>
     </main>

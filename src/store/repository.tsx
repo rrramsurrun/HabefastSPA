@@ -17,7 +17,6 @@ export async function sendExercise(
   exercise: ExerciseTemplate,
   action: 'ADD' | 'EDIT'
 ) {
-  console.log('attempting post');
   const requestOptions = {
     method: action === 'ADD' ? 'POST' : 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -27,12 +26,13 @@ export async function sendExercise(
     import.meta.env.VITE_SERVER_URL + '/exercises',
     requestOptions
   );
-  if (!response.ok) {
-    console.log(`${action}Exercises failed`);
-    return;
-  }
   const data = (await response.json()) as unknown;
-  return data;
+
+  if (response.ok) {
+    return { data: data, success: true };
+  }
+
+  return { data: data, success: false };
 }
 export async function sendWorkout(workout: Workout) {
   const requestOptions = {

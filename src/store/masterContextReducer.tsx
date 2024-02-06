@@ -1,3 +1,4 @@
+import ErrorMessage from '../classes/ErrorMessage';
 import ExerciseTemplate from '../classes/ExerciseTemplate';
 import Workout from '../classes/Workout';
 import { masterData as masterDataType } from './MasterContext';
@@ -31,13 +32,23 @@ type SaveWorkoutAction = {
   payload: Workout;
 };
 
+type SetErrorMessage = {
+  type: 'SET_ERROR';
+  payload: ErrorMessage;
+};
+type ClearErrorMessage = {
+  type: 'CLEAR_ERROR';
+};
+
 type Action =
   | LoadExercisesAction
   | AddExerciseAction
   | EditExerciseAction
   | LoadWorkoutAction
   | StartWorkoutAction
-  | SaveWorkoutAction;
+  | SaveWorkoutAction
+  | SetErrorMessage
+  | ClearErrorMessage;
 
 export default function masterReducer(state: masterDataType, action: Action) {
   if (action.type === 'LOAD_EXERCISES') {
@@ -74,6 +85,12 @@ export default function masterReducer(state: masterDataType, action: Action) {
     state.workouts.push(action.payload);
     state.activeWorkout = null;
     return { ...state };
+  }
+  if (action.type === 'SET_ERROR') {
+    return { ...state, errormsg: action.payload };
+  }
+  if (action.type === 'CLEAR_ERROR') {
+    return { ...state, errormsg: null };
   }
 
   return state;

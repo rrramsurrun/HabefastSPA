@@ -2,17 +2,20 @@ import { ReactNode, createContext, useContext, useReducer } from 'react';
 import ExerciseTemplate from '../classes/ExerciseTemplate';
 import masterReducer from './masterContextReducer';
 import Workout from '../classes/Workout';
+import ErrorMessage from '../classes/ErrorMessage';
 
 export type masterData = {
   exercises: ExerciseTemplate[];
   activeWorkout: Workout | null;
   workouts: Workout[];
+  errormsg: ErrorMessage | null;
 };
 
 const initialState: masterData = {
   exercises: [],
   activeWorkout: null,
   workouts: [],
+  errormsg: null,
 };
 
 type masterDataContext = masterData & {
@@ -22,6 +25,8 @@ type masterDataContext = masterData & {
   loadWorkouts: (workouts: Workout[]) => void;
   startWorkout: () => void;
   saveWorkout: (workout: Workout) => void;
+  setError: (errormsg: ErrorMessage) => void;
+  clearError: () => void;
 };
 
 const MasterContext = createContext<masterDataContext | null>(null);
@@ -32,6 +37,7 @@ function MasterContextProvider({ children }: { children: ReactNode }) {
     exercises: masterDataState.exercises,
     activeWorkout: masterDataState.activeWorkout,
     workouts: masterDataState.workouts,
+    errormsg: masterDataState.errormsg,
     loadExercises(exercises) {
       dispatch({ type: 'LOAD_EXERCISES', payload: exercises });
     },
@@ -49,6 +55,12 @@ function MasterContextProvider({ children }: { children: ReactNode }) {
     },
     saveWorkout(workout) {
       dispatch({ type: 'SAVE_WORKOUT', payload: workout });
+    },
+    setError(error) {
+      dispatch({ type: 'SET_ERROR', payload: error });
+    },
+    clearError() {
+      dispatch({ type: 'CLEAR_ERROR' });
     },
   };
 

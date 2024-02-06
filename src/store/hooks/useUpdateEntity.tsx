@@ -3,21 +3,25 @@ import ExerciseTemplate from '../../classes/ExerciseTemplate';
 import { useMasterContext } from '../MasterContext';
 import { sendExercise } from '../repository';
 import { useNavigate } from 'react-router-dom';
+import ErrorMessage from '../../classes/ErrorMessage';
 
 export function useUpdateEntity(
   exercise: ExerciseTemplate | null,
   action: 'ADD' | 'EDIT'
 ) {
   const navigate = useNavigate();
-  const { addExercise, editExercise } = useMasterContext();
+  const { addExercise, editExercise, setError } = useMasterContext();
   const [newExercise, setNewExercise] = useState<ExerciseTemplate | null>(null);
   useEffect(() => {
     async function send(exercise: ExerciseTemplate) {
-      const response = (await sendExercise(
-        exercise,
-        action
-      )) as ExerciseTemplate;
-      setNewExercise(response);
+      const response = await sendExercise(exercise, action);
+      if (response.success) {
+        const e = response.data as ExerciseTemplate;
+        setNewExercise(e);
+      } else {
+        const e = response.data as ErrorMessage;
+        setError(e);
+      }
     }
     if (exercise) {
       send(exercise);
@@ -27,11 +31,12 @@ export function useUpdateEntity(
     if (newExercise) {
       if (action === 'ADD') {
         addExercise(newExercise);
+        navigate('/exercises');
       }
       if (action === 'EDIT') {
         editExercise(newExercise);
+        navigate('/exercises');
       }
-      navigate('/exercises');
     }
   }, [newExercise]);
 }

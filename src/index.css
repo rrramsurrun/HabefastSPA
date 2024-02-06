@@ -36,3 +36,7 @@ main {
   background-color: red;
   color: white;
 }
+
+.error_message {
+  color: red;
+}
