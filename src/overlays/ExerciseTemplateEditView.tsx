@@ -1,5 +1,5 @@
 // import React from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useMasterContext } from '../store/MasterContext';
 import { useEffect, useRef, useState } from 'react';
 import styles from './ExerciseTemplateEditView.module.css';
@@ -12,15 +12,15 @@ export default function ExerciseTemplateEditView({
   action: 'ADD' | 'EDIT';
 }) {
   const params = useParams();
-  const navigate = useNavigate();
-  const { exercises, addExercise, editExercise } = useMasterContext();
+  const { exercises } = useMasterContext();
   const [newExercise, setnewExercise] = useState<ExerciseTemplate | null>(null);
 
-  useUpdateEntity(newExercise);
+  //If newExercise is null, this has no effect
+  useUpdateEntity(newExercise, action);
 
   //Handle exercise load
   const id = Number(params.id);
-  let exercise;
+  let exercise: ExerciseTemplate | undefined;
   if (action === 'EDIT') {
     exercise = exercises.find((e) => e.id === id);
     if (exercise === undefined) {
@@ -31,7 +31,7 @@ export default function ExerciseTemplateEditView({
       );
     }
   }
-  const changeExercise = action === 'ADD' ? addExercise : editExercise;
+
   const exerciseName = useRef<HTMLInputElement>(null);
   const exercisePart = useRef<HTMLInputElement>(null);
   const exerciseType = useRef<HTMLInputElement>(null);
@@ -47,9 +47,9 @@ export default function ExerciseTemplateEditView({
         name: exerciseName.current.value,
         bodyPart: exercisePart.current.value,
         exerciseType: exerciseType.current.value,
+        id: exercise !== undefined ? exercise.id : undefined,
       };
       setnewExercise(newExercise);
-      navigate('/exercises');
     }
   }
 

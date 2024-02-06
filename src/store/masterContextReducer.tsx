@@ -48,7 +48,12 @@ export default function masterReducer(state: masterDataType, action: Action) {
     return { ...state, exercises: action.payload };
   }
   if (action.type === 'ADD_EXERCISE') {
-    state.exercises.push(action.payload);
+    //Conditional used to account for Strict mode
+    if (
+      state.exercises.filter((e) => e.id === action.payload.id).length === 0
+    ) {
+      state.exercises.push(action.payload);
+    }
     return { ...state };
   }
   if (action.type === 'EDIT_EXERCISE') {
