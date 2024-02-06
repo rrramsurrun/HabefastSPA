@@ -1,6 +1,7 @@
 // import ExerciseTemplate from '../classes/ExerciseTemplate';
 
 import ExerciseTemplate from '../classes/ExerciseTemplate';
+import Workout from '../classes/Workout';
 
 export async function getExercises() {
   const response = await fetch(import.meta.env.VITE_SERVER_URL + '/exercises');
@@ -12,10 +13,13 @@ export async function getExercises() {
   return data;
 }
 
-export async function sendExercise(exercise: ExerciseTemplate) {
+export async function sendExercise(
+  exercise: ExerciseTemplate,
+  action: 'ADD' | 'EDIT'
+) {
   console.log('attempting post');
   const requestOptions = {
-    method: 'POST',
+    method: action === 'ADD' ? 'POST' : 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(exercise),
   };
@@ -24,21 +28,31 @@ export async function sendExercise(exercise: ExerciseTemplate) {
     requestOptions
   );
   if (!response.ok) {
-    console.log('addExercises failed');
+    console.log(`${action}Exercises failed`);
     return;
   }
   const data = (await response.json()) as unknown;
   return data;
 }
-// export async function editExercise() {
-//   const response = await fetch(import.meta.env.VITE_SERVER_URL + '/exercises');
-//   if (!response.ok) {
-//     console.log('getExercises failed');
-//     return;
-//   }
-//   const data = (await response.json()) as unknown;
-//   return data;
-// }
+export async function sendWorkout(workout: Workout) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(workout),
+  };
+  const response = await fetch(
+    import.meta.env.VITE_SERVER_URL + '/workouts',
+    requestOptions
+  );
+
+  console.log(response);
+  if (!response.ok) {
+    console.log('addWorkout failed');
+    return;
+  }
+  const data = (await response.json()) as unknown;
+  return data;
+}
 
 export async function getWorkouts() {
   const response = await fetch(import.meta.env.VITE_SERVER_URL + '/workouts');

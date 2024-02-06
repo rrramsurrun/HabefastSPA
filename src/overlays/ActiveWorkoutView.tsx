@@ -2,11 +2,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { useMasterContext } from '../store/MasterContext';
 import { useEffect, useState } from 'react';
+import Workout from '../classes/Workout';
+import { useUpdateWorkout } from '../store/hooks/useUpdateWorkout';
 
 export default function ActiveWorkoutView() {
-  const { activeWorkout, saveWorkout } = useMasterContext();
+  const { activeWorkout } = useMasterContext();
   const navigate = useNavigate();
   const [submit, setSubmit] = useState(false);
+  const [workoutSend, setWorkoutSend] = useState<Workout | null>(null);
 
   if (activeWorkout == null) {
     return (
@@ -24,14 +27,13 @@ export default function ActiveWorkoutView() {
   //Save workout
   useEffect(() => {
     if (submit) {
-      setTimeout(() => {
-        if (activeWorkout.endWorkout()) {
-          saveWorkout(activeWorkout);
-          navigate('/');
-        }
-      }, 1000);
+      if (activeWorkout.endWorkout()) {
+        setWorkoutSend(activeWorkout);
+      }
     }
   }, [submit]);
+
+  useUpdateWorkout(workoutSend);
 
   return (
     <main>
