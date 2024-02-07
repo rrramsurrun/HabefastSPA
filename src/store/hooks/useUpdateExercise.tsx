@@ -5,7 +5,7 @@ import { sendExercise } from '../repository';
 import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../../classes/ErrorMessage';
 
-export function useUpdateEntity(
+export function useUpdateExercise(
   exercise: ExerciseTemplate | null,
   action: 'ADD' | 'EDIT'
 ) {
@@ -27,16 +27,16 @@ export function useUpdateEntity(
       send(exercise);
     }
   }, [exercise]);
+
   useEffect(() => {
     if (newExercise) {
       if (action === 'ADD') {
         addExercise(newExercise);
-        navigate('/exercises');
       }
       if (action === 'EDIT') {
         editExercise(newExercise);
-        navigate('/exercises');
       }
+      navigate('/exercises');
     }
   }, [newExercise]);
 }

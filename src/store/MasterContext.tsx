@@ -9,6 +9,7 @@ export type masterData = {
   activeWorkout: Workout | null;
   workouts: Workout[];
   errormsg: ErrorMessage | null;
+  lastPath: string;
 };
 
 const initialState: masterData = {
@@ -16,6 +17,7 @@ const initialState: masterData = {
   activeWorkout: null,
   workouts: [],
   errormsg: null,
+  lastPath: '/',
 };
 
 type masterDataContext = masterData & {
@@ -27,6 +29,7 @@ type masterDataContext = masterData & {
   saveWorkout: (workout: Workout) => void;
   setError: (errormsg: ErrorMessage) => void;
   clearError: () => void;
+  updateLastPath: (lastPath: string) => void;
 };
 
 const MasterContext = createContext<masterDataContext | null>(null);
@@ -38,6 +41,7 @@ function MasterContextProvider({ children }: { children: ReactNode }) {
     activeWorkout: masterDataState.activeWorkout,
     workouts: masterDataState.workouts,
     errormsg: masterDataState.errormsg,
+    lastPath: masterDataState.lastPath,
     loadExercises(exercises) {
       dispatch({ type: 'LOAD_EXERCISES', payload: exercises });
     },
@@ -61,6 +65,9 @@ function MasterContextProvider({ children }: { children: ReactNode }) {
     },
     clearError() {
       dispatch({ type: 'CLEAR_ERROR' });
+    },
+    updateLastPath(lastPath) {
+      dispatch({ type: 'UPDATE_LASTPATH', payload: lastPath });
     },
   };
 

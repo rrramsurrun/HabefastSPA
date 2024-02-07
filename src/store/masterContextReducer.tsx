@@ -39,6 +39,10 @@ type SetErrorMessage = {
 type ClearErrorMessage = {
   type: 'CLEAR_ERROR';
 };
+type UpdateLastPath = {
+  type: 'UPDATE_LASTPATH';
+  payload: string;
+};
 
 type Action =
   | LoadExercisesAction
@@ -48,7 +52,8 @@ type Action =
   | StartWorkoutAction
   | SaveWorkoutAction
   | SetErrorMessage
-  | ClearErrorMessage;
+  | ClearErrorMessage
+  | UpdateLastPath;
 
 export default function masterReducer(state: masterDataType, action: Action) {
   if (action.type === 'LOAD_EXERCISES') {
@@ -91,6 +96,9 @@ export default function masterReducer(state: masterDataType, action: Action) {
   }
   if (action.type === 'CLEAR_ERROR') {
     return { ...state, errormsg: null };
+  }
+  if (action.type === 'UPDATE_LASTPATH') {
+    return { ...state, lastPath: action.payload };
   }
 
   return state;

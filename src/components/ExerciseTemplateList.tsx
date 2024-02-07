@@ -11,6 +11,7 @@ export default function ExerciseTemplateList() {
         exercises.map((e) => (
           <li className={styles.li} key={e.id}>
             <NavLink className={styles.nav} to={`/exercise/${e.id}`}>
+              <span className={styles.name}>{e.id}</span>
               <span className={styles.name}>{e.name}</span>
               <span className={styles.bodyPart}>{e.bodyPart}</span>
             </NavLink>

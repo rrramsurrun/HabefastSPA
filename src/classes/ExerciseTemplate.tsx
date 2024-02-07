@@ -1,5 +1,5 @@
 export default class ExerciseTemplate {
-  id?: string;
+  id?: number;
   name: string;
   exerciseType: string;
   bodyPart: string;
@@ -8,7 +8,7 @@ export default class ExerciseTemplate {
     name: string,
     exerciseType: string,
     bodyPart: string,
-    id?: string
+    id?: number
   ) {
     this.id = id;
     this.name = name;

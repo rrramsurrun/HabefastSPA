@@ -4,7 +4,8 @@ import { useMasterContext } from '../store/MasterContext';
 import { useRef, useState } from 'react';
 import styles from './ExerciseTemplateEditView.module.css';
 import ExerciseTemplate from '../classes/ExerciseTemplate';
-import { useUpdateEntity } from '../store/hooks/useUpdateEntity';
+import { useUpdateExercise } from '../store/hooks/useUpdateExercise';
+import BackButton from '../components/BackButton';
 
 export default function ExerciseTemplateEditView({
   action,
@@ -16,10 +17,10 @@ export default function ExerciseTemplateEditView({
   const [newExercise, setnewExercise] = useState<ExerciseTemplate | null>(null);
 
   //If newExercise is null, this has no effect
-  useUpdateEntity(newExercise, action);
+  useUpdateExercise(newExercise, action);
 
   //Handle exercise load
-  const id = params.id;
+  const id = Number(params.id);
   let exercise: ExerciseTemplate | undefined;
   if (action === 'EDIT') {
     exercise = exercises.find((e) => e.id === id);
@@ -55,6 +56,7 @@ export default function ExerciseTemplateEditView({
 
   return (
     <main>
+      <BackButton />
       <div className={styles.flexCol}>
         <label htmlFor="name">Exercise Name</label>
         <input
