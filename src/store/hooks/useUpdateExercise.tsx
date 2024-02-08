@@ -10,11 +10,11 @@ export function useUpdateExercise(
   action: 'ADD' | 'EDIT'
 ) {
   const navigate = useNavigate();
-  const { addExercise, editExercise, setError } = useMasterContext();
+  const { addExercise, editExercise, setError, token } = useMasterContext();
   const [newExercise, setNewExercise] = useState<ExerciseTemplate | null>(null);
   useEffect(() => {
-    async function send(exercise: ExerciseTemplate) {
-      const response = await sendExercise(exercise, action);
+    async function send(exercise: ExerciseTemplate, token: string) {
+      const response = await sendExercise(exercise, action, token);
       if (response.success) {
         const e = response.data as ExerciseTemplate;
         setNewExercise(e);
@@ -23,10 +23,10 @@ export function useUpdateExercise(
         setError(e);
       }
     }
-    if (exercise) {
-      send(exercise);
+    if (exercise && token) {
+      send(exercise, token);
     }
-  }, [exercise]);
+  }, [exercise, token]);
 
   useEffect(() => {
     if (newExercise) {

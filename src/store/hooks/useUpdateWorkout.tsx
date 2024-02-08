@@ -6,17 +6,17 @@ import { useNavigate } from 'react-router-dom';
 
 export function useUpdateWorkout(workout: Workout | null) {
   const navigate = useNavigate();
-  const { saveWorkout } = useMasterContext();
+  const { saveWorkout, token } = useMasterContext();
   const [newWorkout, setNewWorkout] = useState<Workout | null>(null);
   useEffect(() => {
-    async function send(workout: Workout) {
-      const response = (await sendWorkout(workout)) as Workout;
+    async function send(workout: Workout, token: string) {
+      const response = (await sendWorkout(workout, token)) as Workout;
       setNewWorkout(response);
     }
-    if (workout) {
-      send(workout);
+    if (workout && token) {
+      send(workout, token);
     }
-  }, [workout]);
+  }, [workout, token]);
 
   useEffect(() => {
     if (newWorkout) {

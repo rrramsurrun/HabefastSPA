@@ -5,19 +5,21 @@ import { useMasterContext } from '../MasterContext';
 import Workout from '../../classes/Workout';
 
 export function useFetch() {
-  const { loadExercises, loadWorkouts } = useMasterContext();
+  const { loadExercises, loadWorkouts, token } = useMasterContext();
 
   //Add Exercise Templates on initial render
   const [exerciseTemplates, setExerciseTemplates] =
     useState<ExerciseTemplate[]>();
 
   useEffect(() => {
-    async function fetchExercises() {
-      const data = (await getExercises()) as ExerciseTemplate[];
+    async function fetchExercises(token: string) {
+      const data = (await getExercises(token)) as ExerciseTemplate[];
       setExerciseTemplates(data);
     }
-    fetchExercises();
-  }, []);
+    if (token) {
+      fetchExercises(token);
+    }
+  }, [token]);
 
   useEffect(() => {
     if (exerciseTemplates) {
@@ -29,16 +31,18 @@ export function useFetch() {
   const [workouts, setWorkouts] = useState<Workout[]>();
 
   useEffect(() => {
+    async function fetchWorkouts(token: string) {
+      const data = (await getWorkouts(token)) as Workout[];
+      setWorkouts(data);
+    }
+    if (token) {
+      fetchWorkouts(token);
+    }
+  }, [token]);
+
+  useEffect(() => {
     if (workouts) {
       loadWorkouts(workouts);
     }
   }, [workouts]);
-
-  useEffect(() => {
-    async function fetchWorkouts() {
-      const data = (await getWorkouts()) as Workout[];
-      setWorkouts(data);
-    }
-    fetchWorkouts();
-  }, []);
 }

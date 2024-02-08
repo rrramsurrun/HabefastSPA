@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export default class ErrorMessage {
   timestamp: Date;
   message: String[];

@@ -27,6 +27,12 @@ main {
   justify-content: space-between;
 }
 
+.flexCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .mainpage__widebutton {
   width: 100%;
   height: 3em;

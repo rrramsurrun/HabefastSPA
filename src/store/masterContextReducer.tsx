@@ -43,6 +43,10 @@ type UpdateLastPath = {
   type: 'UPDATE_LASTPATH';
   payload: string;
 };
+type UpdateToken = {
+  type: 'UPDATE_TOKEN';
+  payload: string;
+};
 
 type Action =
   | LoadExercisesAction
@@ -53,7 +57,8 @@ type Action =
   | SaveWorkoutAction
   | SetErrorMessage
   | ClearErrorMessage
-  | UpdateLastPath;
+  | UpdateLastPath
+  | UpdateToken;
 
 export default function masterReducer(state: masterDataType, action: Action) {
   if (action.type === 'LOAD_EXERCISES') {
@@ -99,6 +104,9 @@ export default function masterReducer(state: masterDataType, action: Action) {
   }
   if (action.type === 'UPDATE_LASTPATH') {
     return { ...state, lastPath: action.payload };
+  }
+  if (action.type === 'UPDATE_TOKEN') {
+    return { ...state, token: action.payload };
   }
 
   return state;

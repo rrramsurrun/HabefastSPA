@@ -10,6 +10,7 @@ export type masterData = {
   workouts: Workout[];
   errormsg: ErrorMessage | null;
   lastPath: string;
+  token: string;
 };
 
 const initialState: masterData = {
@@ -18,6 +19,7 @@ const initialState: masterData = {
   workouts: [],
   errormsg: null,
   lastPath: '/',
+  token: '',
 };
 
 type masterDataContext = masterData & {
@@ -30,6 +32,7 @@ type masterDataContext = masterData & {
   setError: (errormsg: ErrorMessage) => void;
   clearError: () => void;
   updateLastPath: (lastPath: string) => void;
+  updateToken: (token: string) => void;
 };
 
 const MasterContext = createContext<masterDataContext | null>(null);
@@ -42,6 +45,7 @@ function MasterContextProvider({ children }: { children: ReactNode }) {
     workouts: masterDataState.workouts,
     errormsg: masterDataState.errormsg,
     lastPath: masterDataState.lastPath,
+    token: masterDataState.token,
     loadExercises(exercises) {
       dispatch({ type: 'LOAD_EXERCISES', payload: exercises });
     },
@@ -68,6 +72,9 @@ function MasterContextProvider({ children }: { children: ReactNode }) {
     },
     updateLastPath(lastPath) {
       dispatch({ type: 'UPDATE_LASTPATH', payload: lastPath });
+    },
+    updateToken(token) {
+      dispatch({ type: 'UPDATE_TOKEN', payload: token });
     },
   };
 
