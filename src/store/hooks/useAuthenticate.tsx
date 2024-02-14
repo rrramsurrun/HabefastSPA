@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Credentials } from '../../classes/Credentials';
 import { useMasterContext } from '../MasterContext';
 import { authenticate } from '../repository';
